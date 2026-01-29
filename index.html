@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mothers Hangout Initiative - Empowering Women, Building Communities</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --lemon: #FFF44F;
+            --pink: #FFB6C1;
+            --dark-pink: #FF69B4;
+            --white: #FFFFFF;
+            --black: #1a1a1a;
+            --soft-grey: #f8f8f8;
+            --text-grey: #666;
+            --warm-peach: #FFE5D9;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        /* ========================================
+           PRELOADER
+        ======================================== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--lemon) 0%, var(--pink) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--dark-pink);
+            margin-bottom: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .preloader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeSlideUp 1s ease-out;
+        }
+
+        .preloader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 2px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .brand-name span {
+            color: var(--dark-pink);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--lemon), var(--pink));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--dark-pink);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--dark-pink);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--black);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ========================================
+           PAGE CONTAINER & TRANSITIONS
+        ======================================== */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+            animation: fadeInPage 0.6s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================
+           HOME PAGE
+        ======================================== */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(135deg, var(--lemon) 0%, var(--pink) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><circle cx="100" cy="100" r="80" fill="rgba(255,255,255,0.1)"/><circle cx="1100" cy="500" r="120" fill="rgba(255,255,255,0.1)"/><circle cx="600" cy="300" r="60" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.5;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 58px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 25px;
+            line-height: 1.2;
+            animation: fadeSlideUp 1s ease 0.3s backwards;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--white);
+            margin-bottom: 40px;
+            line-height: 1.8;
+            animation: fadeSlideUp 1s ease 0.5s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeSlideUp 1s ease 0.7s backwards;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--dark-pink);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--dark-pink);
+            transform: translateY(-3px);
+        }
+
+        /* ========================================
+           SECTIONS
+        ======================================== */
+        .section {
+            padding: 100px 20px;
+        }
+
+        .section-alt {
+            background: var(--soft-grey);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--black);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--lemon), var(--pink));
+            border-radius: 2px;
+        }
+
+        .intro-text {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-grey);
+        }
+
+        /* ========================================
+           VALUES GRID
+        ======================================== */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .value-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--pink);
+            box-shadow: 0 20px 40px rgba(255,182,193,0.3);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .value-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .value-card p {
+            color: var(--text-grey);
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           IMPACT SECTION
+        ======================================== */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255,244,79,0.1), rgba(255,182,193,0.1));
+            border-radius: 20px;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--dark-pink);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: var(--text-grey);
+        }
+
+        /* ========================================
+           TESTIMONIAL
+        ======================================== */
+        .testimonial {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 50px 30px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .testimonial-text {
+            font-size: 20px;
+            font-style: italic;
+            color: var(--text-grey);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--dark-pink);
+        }
+
+        /* ========================================
+           ABOUT PAGE
+        ======================================== */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .slogan-banner {
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            padding: 60px 30px;
+            text-align: center;
+            border-radius: 20px;
+            margin: 60px 0;
+        }
+
+        .slogan-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .ubuntu-section {
+            background: var(--soft-grey);
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        .ubuntu-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--dark-pink);
+        }
+
+        .ubuntu-section p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-grey);
+        }
+
+        /* ========================================
+           MISSION & VISION PAGE
+        ======================================== */
+        .mission-vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .mv-card {
+            background: var(--white);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .mv-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 25px;
+            color: var(--dark-pink);
+        }
+
+        .mv-card p, .mv-card ol {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-grey);
+        }
+
+        .mv-card ol {
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+
+        .mv-card ol li {
+            margin-bottom: 15px;
+        }
+
+        /* ========================================
+           GALLERY PAGE
+        ======================================== */
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .gallery-btn {
+            padding: 12px 30px;
+            background: var(--white);
+            border: 2px solid var(--pink);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--black);
+        }
+
+        .gallery-btn:hover, .gallery-btn.active {
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            color: var(--white);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 250px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            z-index: 100;
+            margin-top: 10px;
+            padding: 10px 0;
+        }
+
+        .dropdown-content.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--black);
+            font-weight: 500;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            color: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            aspect-ratio: 4/3;
+            background: var(--soft-grey);
+            display: none;
+        }
+
+        .gallery-item.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--pink);
+            background: linear-gradient(135deg, rgba(255,244,79,0.2), rgba(255,182,193,0.2));
+        }
+
+        .gallery-placeholder span {
+            font-size: 16px;
+            margin-top: 10px;
+            color: var(--text-grey);
+            font-weight: 600;
+        }
+
+        /* ========================================
+           TEAM PAGE
+        ======================================== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .team-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(255,182,193,0.3);
+        }
+
+        .team-photo {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: var(--white);
+        }
+
+        .team-info {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .team-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .team-info .position {
+            color: var(--dark-pink);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .team-info p {
+            color: var(--text-grey);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* ========================================
+           TEAM MEMBER DETAIL PAGE
+        ======================================== */
+        .member-detail {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark-pink);
+            font-weight: 600;
+            margin-bottom: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        .member-header {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .member-photo-large {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: var(--white);
+        }
+
+        .member-bio {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .member-bio h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .member-bio .position {
+            color: var(--dark-pink);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .member-bio p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-grey);
+        }
+
+        /* ========================================
+           DONATION PAGE
+        ======================================== */
+        .donation-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .donation-card {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            margin-top: 40px;
+        }
+
+        .bank-details {
+            background: linear-gradient(135deg, rgba(255,244,79,0.1), rgba(255,182,193,0.1));
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .bank-detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .bank-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .bank-label {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .bank-value {
+            font-size: 18px;
+            color: var(--dark-pink);
+            font-weight: 600;
+        }
+
+        .trust-text {
+            background: var(--soft-grey);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .trust-text p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-grey);
+        }
+
+        /* ========================================
+           CONTACT PAGE
+        ======================================== */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-message {
+            text-align: center;
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--text-grey);
+            margin-bottom: 60px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255,182,193,0.3);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .contact-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .contact-card a {
+            color: var(--dark-pink);
+            text-decoration: none;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 60px 20px 30px;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--lemon);
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-section a:hover {
+            color: var(--pink);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--lemon), var(--pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--white);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 40px 20px;
+                transition: left 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .member-header {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-name {
+                font-size: 16px;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">MHI</div>
+        <div class="preloader-text">Mothers Hangout Initiative</div>
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="logo">MHI</div>
+                <div class="brand-name">Mothers <span>Hangout</span></div>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                <li><a href="#" class="nav-link" data-page="mission">Mission & Vision</a></li>
+                <li><a href="#" class="nav-link" data-page="gallery">Gallery</a></li>
+                <li><a href="#" class="nav-link" data-page="team">Team</a></li>
+                <li><a href="#" class="nav-link" data-page="donate">Donate</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="home">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Empowering Mothers, Building Communities</h1>
+                <p>We promote motherhood, peaceful coexistence, and give voice to voiceless women and widows. Together, we build a society where peace, love, and togetherness thrive — because "I am because you are."</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="navigateTo('about')">Learn More</button>
+                    <button class="btn btn-secondary" onclick="navigateTo('donate')">Support Our Cause</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Who We Are</h2>
+                <p class="intro-text">
+                    Mothers Hangout Initiative is a women support organization dedicated to empowering mothers, widows, and vulnerable women across Nigeria and Africa. We believe in the power of community, compassion, and collective action to transform lives and build a better future for all.
+                </p>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">Our Core Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">❤️</div>
+                        <h3>Compassion</h3>
+                        <p>We lead with empathy and understanding in all our endeavors</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <h3>Integrity</h3>
+                        <p>We uphold honesty and transparency in everything we do</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🙏</div>
+                        <h3>Respect</h3>
+                        <p>We honor the dignity and worth of every individual</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">📊</div>
+                        <h3>Accountability</h3>
+                        <p>We take responsibility for our actions and impact</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🌟</div>
+                        <h3>Collaboration</h3>
+                        <p>We work together to achieve greater impact</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">💡</div>
+                        <h3>Innovation</h3>
+                        <p>We embrace creative solutions to complex challenges</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🌱</div>
+                        <h3>Sustainability</h3>
+                        <p>We create lasting change for future generations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Our Impact</h2>
+                <div class="impact-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Women Empowered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Widows Supported</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">300+</div>
+                        <div class="stat-label">Children Helped</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Communities Reached</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">Voices of Hope</h2>
+                <div class="testimonial">
+                    <p class="testimonial-text">"This organization gave me hope when I had none. Through their support, I learned new skills, gained confidence, and now I can provide for my children. I am forever grateful."</p>
+                    <p class="testimonial-author">— A Beneficiary</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div class="page" id="about">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">About Us</h2>
+                <div class="about-content">
+                    <p class="intro-text">
+                        Mothers Hangout Initiative is more than an organization — we are a movement of women supporting women, building bridges of solidarity, and creating spaces where every woman can thrive.
+                    </p>
+                    <p class="intro-text">
+                        We believe in peaceful coexistence among women, breaking down barriers, and fostering genuine connections that transcend social, economic, and cultural divides. Our work is rooted in compassion, driven by purpose, and sustained by the collective power of women who refuse to leave anyone behind.
+                    </p>
+                    
+                    <div class="slogan-banner">
+                        <h2>"One for All, All for One"</h2>
+                    </div>
+
+                    <div class="ubuntu-section">
+                        <h3>Ubuntu: I Am Because You Are</h3>
+                        <p>
+                            At the heart of our work is the African philosophy of Ubuntu — the belief that our humanity is intertwined. We recognize that when one woman rises, we all rise. When one woman suffers, we all feel her pain. This interconnectedness drives us to create programs that not only address immediate needs but also build long-term resilience and community strength.
+                        </p>
+                        <p style="margin-top: 20px;">
+                            We promote solidarity among women, giving voice to the voiceless, supporting widows in their time of need, and empowering vulnerable women to reclaim their dignity and independence.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MISSION & VISION PAGE -->
+    <div class="page" id="mission">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Mission & Vision</h2>
+                <div class="mission-vision-grid">
+                    <div class="mv-card">
+                        <h3>Our Vision</h3>
+                        <p>
+                            Mothers Hangout Initiative is a women support group aimed at promoting motherhood, peaceful coexistence among women, giving voice to voiceless women and widows, and building a society where peace, love, togetherness, and sharing are paramount.
+                        </p>
+                        <p style="margin-top: 20px;">
+                            We promote the ideology of Ubuntu — the spirit of humanity: <strong>"I am because you are."</strong>
+                        </p>
+                    </div>
+                    <div class="mv-card">
+                        <h3>Our Mission</h3>
+                        <ol>
+                            <li>To affect the lives of the less privileged and widows within and around us.</li>
+                            <li>To reach out to vulnerable women in our society.</li>
+                            <li>To comfort abused women and children by empowering them through skill acquisition and education.</li>
+                            <li>To add value to women's lives by making them mentally, physically, and financially independent.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- GALLERY PAGE -->
+    <div class="page" id="gallery">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Our Gallery</h2>
+                <div class="gallery-controls">
+                    <button class="gallery-btn active" data-filter="all">All</button>
+                    <div class="dropdown-container">
+                        <button class="gallery-btn" id="nigeriaBtn">Nigerian States ▼</button>
+                        <div class="dropdown-content" id="nigeriaDropdown"></div>
+                    </div>
+                    <button class="gallery-btn" data-filter="african">African Outreach</button>
+                </div>
+                <div class="gallery-grid" id="galleryGrid"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TEAM PAGE -->
+    <div class="page" id="team">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Our Team</h2>
+                <p class="intro-text">
+                    Meet the dedicated women leading Mothers Hangout Initiative with passion, vision, and unwavering commitment to our cause.
+                </p>
+                <div class="team-grid">
+                    <div class="team-card" onclick="showMemberDetail('comfort')">
+                        <div class="team-photo">👩</div>
+                        <div class="team-info">
+                            <h3>Mrs. Comfort David Mebude</h3>
+                            <p class="position">Founder</p>
+                            <p>Visionary leader dedicated to empowering women and building stronger communities across Nigeria and Africa.</p>
+                        </div>
+                    </div>
+                    <div class="team-card" onclick="showMemberDetail('afiong')">
+                        <div class="team-photo">👩</div>
+                        <div class="team-info">
+                            <h3>Mrs. Afiong Bassey</h3>
+                            <p class="position">Secretary General</p>
+                            <p>Committed advocate for women's rights and community development, ensuring our mission reaches those who need it most.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TEAM MEMBER DETAIL PAGES -->
+    <div class="page" id="member-comfort">
+        <section class="section">
+            <div class="member-detail">
+                <div class="back-btn" onclick="navigateTo('team')">
+                    ← Back to Team
+                </div>
+                <div class="member-header">
+                    <div class="member-photo-large">👩</div>
+                    <div class="member-bio">
+                        <h2>Mrs. Comfort David Mebude</h2>
+                        <p class="position">Founder</p>
+                        <p>
+                            Mrs. Comfort David Mebude is the visionary founder of Mothers Hangout Initiative. With a deep passion for women's empowerment and community development, she has dedicated her life to creating opportunities for vulnerable women and widows across Nigeria.
+                        </p>
+                        <p style="margin-top: 20px;">
+                            Her leadership is characterized by compassion, strategic thinking, and an unwavering commitment to the Ubuntu philosophy — "I am because you are." Under her guidance, the organization has touched countless lives and continues to expand its reach across African communities.
+                        </p>
+                    </div>
+                </div>
+                <div class="mv-card" style="margin-top: 40px;">
+                    <h3>Leadership Philosophy</h3>
+                    <p>
+                        "I believe that when we empower one woman, we empower an entire community. Every widow we support, every vulnerable woman we uplift, creates a ripple effect of positive change that extends far beyond what we can see. Our work is not just about providing aid — it's about restoring dignity, rebuilding hope, and reconnecting women to their inherent strength and worth."
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="page" id="member-afiong">
+        <section class="section">
+            <div class="member-detail">
+                <div class="back-btn" onclick="navigateTo('team')">
+                    ← Back to Team
+                </div>
+                <div class="member-header">
+                    <div class="member-photo-large">👩</div>
+                    <div class="member-bio">
+                        <h2>Mrs. Afiong Bassey</h2>
+                        <p class="position">Secretary General</p>
+                        <p>
+                            Mrs. Afiong Bassey serves as the Secretary General of Mothers Hangout Initiative, bringing exceptional organizational skills and a heart for service to the leadership team. Her dedication to ensuring the smooth operation of all programs has been instrumental in the organization's growth and impact.
+                        </p>
+                        <p style="margin-top: 20px;">
+                            With extensive experience in community outreach and administrative excellence, Mrs. Bassey ensures that every initiative is executed with precision and care. Her attention to detail and commitment to transparency have helped build trust with beneficiaries, donors, and partners alike.
+                        </p>
+                    </div>
+                </div>
+                <div class="mv-card" style="margin-top: 40px;">
+                    <h3>Core Beliefs</h3>
+                    <p>
+                        "Every woman deserves to be heard, valued, and supported. In my role, I work to ensure that our organization's operations reflect our values — that we are accountable, transparent, and always centered on the needs of the women we serve. When we work together with integrity and purpose, there is no limit to the positive change we can create."
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- DONATION PAGE -->
+    <div class="page" id="donate">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Support Our Cause</h2>
+                <div class="donation-container">
+                    <p class="intro-text">
+                        Your generous donation helps us empower vulnerable women, support widows, and create lasting change in communities across Nigeria and Africa. Every contribution makes a difference.
+                    </p>
+                    <div class="donation-card">
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 30px; text-align: center;">Bank Details</h3>
+                        <div class="bank-details">
+                            <div class="bank-detail-row">
+                                <span class="bank-label">Account Name:</span>
+                                <span class="bank-value">Mothers Hangout Initiative</span>
+                            </div>
+                            <div class="bank-detail-row">
+                                <span class="bank-label">Bank:</span>
+                                <span class="bank-value">First Bank of Nigeria</span>
+                            </div>
+                            <div class="bank-detail-row">
+                                <span class="bank-label">Account Number:</span>
+                                <span class="bank-value">2036379967</span>
+                            </div>
+                        </div>
+                        <div class="trust-text">
+                            <p>
+                                <strong>Our Commitment to Transparency</strong><br>
+                                We maintain the highest standards of financial accountability. Every donation is tracked and used exclusively for our programs and beneficiaries. We regularly share updates on how funds are utilized to create real impact in women's lives.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div class="page" id="contact">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-container">
+                    <p class="contact-message">
+                        We would love to hear from you. Whether you want to learn more about our work, partner with us, or get involved, please reach out. Together, we can create lasting change.
+                    </p>
+                    <div class="contact-grid">
+                        <div class="contact-card">
+                            <div class="contact-icon">📧</div>
+                            <h3>Email</h3>
+                            <a href="mailto:mothershangout17@gmail.com">mothershangout17@gmail.com</a>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">📱</div>
+                            <h3>Facebook</h3>
+                            <a href="https://facebook.com/mothershangoutinitiative" target="_blank">Mothers Hangout Initiative</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Mothers Hangout Initiative</h4>
+                <p>Empowering women, building communities, and promoting the spirit of Ubuntu across Nigeria and Africa.</p>
+                <div class="social-links">
+                    <div class="social-icon">📧</div>
+                    <div class="social-icon">📱</div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#" onclick="navigateTo('about')">About Us</a>
+                <a href="#" onclick="navigateTo('mission')">Mission & Vision</a>
+                <a href="#" onclick="navigateTo('team')">Our Team</a>
+                <a href="#" onclick="navigateTo('gallery')">Gallery</a>
+            </div>
+            <div class="footer-section">
+                <h4>Get Involved</h4>
+                <a href="#" onclick="navigateTo('donate')">Donate</a>
+                <a href="#" onclick="navigateTo('contact')">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: mothershangout17@gmail.com</p>
+                <p>Facebook: Mothers Hangout Initiative</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Mothers Hangout Initiative. All rights reserved. | "One for All, All for One"</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // PRELOADER
+        // ========================================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 2000);
+        });
+
+        // ========================================
+        // NAVIGATION
+        // ========================================
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinksContainer = document.getElementById('navLinks');
+        const navbar = document.getElementById('navbar');
+
+        function navigateTo(pageName) {
+            pages.forEach(page => page.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            const targetPage = document.getElementById(pageName);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            const targetLink = document.querySelector(`[data-page="${pageName}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+            
+            navLinksContainer.classList.remove('active');
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageName = link.getAttribute('data-page');
+                navigateTo(pageName);
+            });
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========================================
+        // GALLERY - NIGERIAN STATES
+        // ========================================
+        const nigerianStates = [
+            'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa',
+            'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo',
+            'Ekiti', 'Enugu', 'FCT Abuja', 'Gombe', 'Imo', 'Jigawa',
+            'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara',
+            'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun',
+            'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
+        ];
+
+        const nigeriaDropdown = document.getElementById('nigeriaDropdown');
+        const nigeriaBtn = document.getElementById('nigeriaBtn');
+        const galleryGrid = document.getElementById('galleryGrid');
+
+        // Populate dropdown
+        nigerianStates.forEach(state => {
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            item.textContent = state;
+            item.onclick = () => filterGallery(state);
+            nigeriaDropdown.appendChild(item);
+        });
+
+        // Toggle dropdown
+        nigeriaBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nigeriaDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            nigeriaDropdown.classList.remove('show');
+        });
+
+        // Generate gallery items
+        function generateGallery() {
+            galleryGrid.innerHTML = '';
+            
+            // Add 'All' items (mixed)
+            for (let i = 1; i <= 12; i++) {
+                const item = document.createElement('div');
+                item.className = 'gallery-item show';
+                item.setAttribute('data-category', 'all');
+                item.innerHTML = `
+                    <div class="gallery-placeholder">
+                        📸
+                        <span>All Gallery ${i}</span>
+                    </div>
+                `;
+                galleryGrid.appendChild(item);
+            }
+
+            // Add Nigerian state items
+            nigerianStates.forEach(state => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('data-category', state);
+                item.innerHTML = `
+                    <div class="gallery-placeholder">
+                        🏛️
+                        <span>${state}</span>
+                    </div>
+                `;
+                galleryGrid.appendChild(item);
+            });
+
+            // Add African outreach items
+            for (let i = 1; i <= 8; i++) {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('data-category', 'african');
+                item.innerHTML = `
+                    <div class="gallery-placeholder">
+                        🌍
+                        <span>African Outreach ${i}</span>
+                    </div>
+                `;
+                galleryGrid.appendChild(item);
+            }
+        }
+
+        // Filter gallery
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.gallery-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (category === 'all') {
+                items.forEach(item => {
+                    if (item.getAttribute('data-category') === 'all') {
+                        setTimeout(() => item.classList.add('show'), 50);
+                    } else {
+                        item.classList.remove('show');
+                    }
+                });
+                document.querySelector('[data-filter="all"]').classList.add('active');
+            } else if (category === 'african') {
+                items.forEach(item => {
+                    if (item.getAttribute('data-category') === 'african') {
+                        setTimeout(() => item.classList.add('show'), 50);
+                    } else {
+                        item.classList.remove('show');
+                    }
+                });
+                document.querySelector('[data-filter="african"]').classList.add('active');
+            } else {
+                // State specific
+                items.forEach(item => {
+                    if (item.getAttribute('data-category') === category) {
+                        setTimeout(() => item.classList.add('show'), 50);
+                    } else {
+                        item.classList.remove('show');
+                    }
+                });
+                nigeriaBtn.classList.add('active');
+            }
+            
+            nigeriaDropdown.classList.remove('show');
+        }
+
+        // Gallery filter buttons
+        document.querySelectorAll('.gallery-btn[data-filter]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterGallery(btn.getAttribute('data-filter'));
+            });
+        });
+
+        // Initialize gallery
+        generateGallery();
+
+        // ========================================
+        // TEAM MEMBER DETAIL
+        // ========================================
+        function showMemberDetail(member) {
+            navigateTo('member-' + member);
+        }
+
+        // ========================================
+        // SMOOTH SCROLLING
+        // ========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
