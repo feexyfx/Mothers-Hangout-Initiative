@@ -1819,7 +1819,7 @@
                         <div class="contact-card">
                             <div class="contact-icon">📧</div>
                             <h3>Email</h3>
-                            <a href="mailto:mothershangout17@gmail.com">mothershangout17@gmail.com</a>
+                            <a href="/cdn-cgi/l/email-protection#167b79627e7364657e777871796362272156717b777f7a3875797b"><span class="__cf_email__" data-cfemail="305d5f445855424358515e575f4544010770575d51595c1e535f5d">[email&#160;protected]</span></a>
                         </div>
                         <div class="contact-card">
                             <div class="contact-icon">📱</div>
@@ -1857,7 +1857,7 @@
             </div>
             <div class="footer-section">
                 <h4>Contact</h4>
-                <p>Email: mothershangout17@gmail.com</p>
+                <p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6aba9b2aea3b4b5aea7a8a1a9b3b2f7f186a1aba7afaae8a5a9ab">[email&#160;protected]</a></p>
                 <p>Facebook: Mothers Hangout Initiative</p>
             </div>
         </div>
@@ -1866,7 +1866,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ========================================
         // PRELOADER
         // ========================================
@@ -2148,6 +2148,165 @@
             }
             
             nigeriaDropdown.classList.remove('show');
+        }
+
+        document.querySelectorAll('.gallery-btn[data-filter]').forEach(btn => {
+            btn.addEventListener('click', () = = state;
+            item.onclick = () => filterGallery(state);
+            nigeriaDropdown.appendChild(item);
+        });
+
+        africanCountries.forEach(country => {
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            item.textContent = country;
+            item.onclick = () => filterGallery(country);
+            africanDropdown.appendChild(item);
+        });
+
+        nigeriaBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nigeriaDropdown.classList.toggle('show');
+            africanDropdown.classList.remove('show');
+        });
+
+        africanBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            africanDropdown.classList.toggle('show');
+            nigeriaDropdown.classList.remove('show');
+        });
+
+        document.addEventListener('click', () => {
+            nigeriaDropdown.classList.remove('show');
+            africanDropdown.classList.remove('show');
+        });
+
+        /*
+        ============================================================
+        GALLERY IMAGE PLACEHOLDER INSTRUCTIONS:
+        ============================================================
+        
+        TO ADD YOUR ACTUAL GALLERY IMAGES/VIDEOS:
+        
+        1. Create a folder named "gallery" in the same location as index.html
+        2. Organize your images like this:
+           gallery/
+           ├── lagos-1.jpg
+           ├── lagos-2.jpg
+           ├── abuja-1.jpg
+           ├── cameroon-1.jpg
+           ├── kenya-1.jpg
+           └── etc...
+        
+        3. In the generateGallery() function below, replace the placeholder
+           innerHTML with actual image tags:
+           
+           BEFORE:
+           item.innerHTML = `
+               <div class="gallery-placeholder">
+                   📸
+                   <span>Lagos</span>
+               </div>
+           `;
+           
+           AFTER:
+           item.innerHTML = `
+               <img src="gallery/lagos-1.jpg" alt="Lagos Program">
+           `;
+           
+        4. For videos, use:
+           <video controls>
+               <source src="gallery/lagos-video.mp4" type="video/mp4">
+           </video>
+        
+        ============================================================
+        */
+
+        function generateGallery() {
+            galleryGrid.innerHTML = '';
+            
+            // All gallery items
+            for (let i = 1; i <= 12; i++) {
+                const item = document.createElement('div');
+                item.className = 'gallery-item show';
+                item.setAttribute('data-category', 'all');
+                item.innerHTML = `
+                    <div class="gallery-placeholder">
+                        📸
+                        <span>All Gallery ${i}</span>
+                    </div>
+                `;
+                // TO ADD REAL IMAGES: Replace above with:
+                // item.innerHTML = `<img src="gallery/all-${i}.jpg" alt="Gallery ${i}">`;
+                galleryGrid.appendChild(item);
+            }
+
+            // Nigerian states
+            nigerianStates.forEach(state => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('data-category', state);
+                item.innerHTML = `
+                    <div class="gallery-placeholder">
+                        🏛️
+                        <span>${state}</span>
+                    </div>
+                `;
+                // TO ADD REAL IMAGES: Replace above with:
+                // item.innerHTML = `<img src="gallery/${state.toLowerCase()}.jpg" alt="${state}">`;
+                galleryGrid.appendChild(item);
+            });
+
+            // African countries
+            africanCountries.forEach(country => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.setAttribute('data-category', country);
+                item.innerHTML = `
+                    <div class="gallery-placeholder">
+                        🌍
+                        <span>${country}</span>
+                    </div>
+                `;
+                // TO ADD REAL IMAGES: Replace above with:
+                // item.innerHTML = `<img src="gallery/${country.toLowerCase()}.jpg" alt="${country}">`;
+                galleryGrid.appendChild(item);
+            });
+        }
+
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.gallery-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (category === 'all') {
+                items.forEach(item => {
+                    if (item.getAttribute('data-category') === 'all') {
+                        setTimeout(() => item.classList.add('show'), 50);
+                    } else {
+                        item.classList.remove('show');
+                    }
+                });
+                document.querySelector('[data-filter="all"]').classList.add('active');
+            } else {
+                items.forEach(item => {
+                    if (item.getAttribute('data-category') === category) {
+                        setTimeout(() => item.classList.add('show'), 50);
+                    } else {
+                        item.classList.remove('show');
+                    }
+                });
+                
+                if (nigerianStates.includes(category)) {
+                    nigeriaBtn.classList.add('active');
+                } else if (africanCountries.includes(category)) {
+                    africanBtn.classList.add('active');
+                }
+            }
+            
+            nigeriaDropdown.classList.remove('show');
+            africanDropdown.classList.remove('show');
         }
 
         document.querySelectorAll('.gallery-btn[data-filter]').forEach(btn => {
